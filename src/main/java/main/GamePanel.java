@@ -1,5 +1,6 @@
 package main;
 
+import JiaoHuDuiXiang.superJiaoHuDuiXiang;
 import ShiTi.WanJia;
 import beiJing.HuanJing;
 
@@ -29,8 +30,11 @@ public class GamePanel extends JPanel implements Runnable {// 游戏屏幕
     public WanJia wanJia = new WanJia(this, keyH);// 玩家
     public HuanJing huanJing = new HuanJing(this);// 环境
     public PengZhuangXiangJianCe pengZhuangXiangJianCe = new PengZhuangXiangJianCe(this);
+    public superJiaoHuDuiXiang[] jiaoHuDuiXiang = new superJiaoHuDuiXiang[10];
+    public JHDX_Setter jhdxSetter = new JHDX_Setter(this);
 
     public Thread gameThread;//游戏线程
+
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(kuan, gao));// 设置屏幕大小
@@ -38,6 +42,10 @@ public class GamePanel extends JPanel implements Runnable {// 游戏屏幕
         this.setDoubleBuffered(true);// 双缓冲
         this.addKeyListener(keyH);// 添加键盘监听
         this.setFocusable(true);
+    }
+
+    public void setJiaoHuDuiXiang() {
+        jhdxSetter.setJiaoHuDuiXiang();
     }
 
     public int getXiangSu() {
@@ -88,8 +96,16 @@ public class GamePanel extends JPanel implements Runnable {// 游戏屏幕
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D)g;// 获取画笔
-        huanJing.draw(g2);
-        wanJia.draw(g2);
+        huanJing.draw(g2);// 绘制环境
+
+        for (int i = 0; i < jiaoHuDuiXiang.length; i++) {
+            if (jiaoHuDuiXiang[i] != null) {
+                jiaoHuDuiXiang[i].draw(g2, this);
+            }
+
+        }
+
+        wanJia.draw(g2);// 绘制玩家
 
         g2.dispose();// 释放画笔
     }

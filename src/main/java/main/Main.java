@@ -16,6 +16,7 @@ public class Main {
         window.setLocationRelativeTo(null);//设置窗口居中显示
         window.setVisible(true);//设置窗口可见
 
+        gamePanel.setJiaoHuDuiXiang();
         gamePanel.startGameThread();
     }
 }
